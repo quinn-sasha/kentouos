@@ -60,8 +60,8 @@ EFI_STATUS SaveMemoryMap(struct MemoryMap* map, EFI_FILE_PROTOCOL* file) {
   char buffer[256];
   EFI_PHYSICAL_ADDRESS iter;
   int i;
-  for (iter = (UINTN)map->buffer, i = 0;
-       iter < map->map_size;
+  for (iter = (EFI_PHYSICAL_ADDRESS)map->buffer, i = 0;
+       iter < (EFI_PHYSICAL_ADDRESS)map->buffer + map->map_size;
        iter += map->discriptor_size, i++) {
     EFI_MEMORY_DESCRIPTOR* desc = (EFI_MEMORY_DESCRIPTOR*)iter;
     len = AsciiPrint(
