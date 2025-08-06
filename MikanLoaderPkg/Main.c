@@ -13,22 +13,18 @@ struct MemoryMap {
   void *buffer;
   UINTN map_key;
   UINTN discriptor_size;
-  UINTN32 discriptor_version;
+  UINT32 discriptor_version;
 };
 
 const CHAR16* GetMemoryTypeUnicode(EFI_MEMORY_TYPE type) {
   switch (type) {
-    case EfiReservedMemoryType: return L"EfiReservedMemoryType":
-    case EfiLoaderCode: return L"EfiLoaderCode":
-    case EfiLoaderData: return L"EfiLoaderData":
-    case EfiLoaderData: return L"EfiLoaderData":
+    case EfiReservedMemoryType: return L"EfiReservedMemoryType";
+    case EfiLoaderCode: return L"EfiLoaderCode";
+    case EfiLoaderData: return L"EfiLoaderData";
+    case EfiLoaderData: return L"EfiLoaderData";
     case EfiBootServicesCode: return L"EfiBootServicesCode";
     case EfiBootServicesData: return L"EfiBootServicesData";
     case EfiRuntimeServicesCode: return L"EfiRuntimeServicesCode";
-    case EfiRuntimeServicesData: return L"EfiRuntimeServicesData";
-    case EfiConventionalMemory: return L"EfiConventionalMemory";
-    case EfiUnusableMemory: return L"EfiUnusableMemory";
-    case EfiACPIReclaimMemory: return L"EfiACPIReclaimMemory";
     case EfiRuntimeServicesData: return L"EfiRuntimeServicesData";
     case EfiConventionalMemory: return L"EfiConventionalMemory";
     case EfiUnusableMemory: return L"EfiUnusableMemory";
