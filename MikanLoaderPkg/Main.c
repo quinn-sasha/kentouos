@@ -17,10 +17,9 @@ struct MemoryMap {
 };
 
 const CHAR16* GetMemoryTypeUnicode(EFI_MEMORY_TYPE Type) {
-  switch (type) {
+  switch (Type) {
     case EfiReservedMemoryType: return L"EfiReservedMemoryType";
     case EfiLoaderCode: return L"EfiLoaderCode";
-    case EfiLoaderData: return L"EfiLoaderData";
     case EfiLoaderData: return L"EfiLoaderData";
     case EfiBootServicesCode: return L"EfiBootServicesCode";
     case EfiBootServicesData: return L"EfiBootServicesData";
@@ -47,6 +46,7 @@ EFI_STATUS GetMemoryMap(struct MemoryMap* map) {
   return gBS->GetMemoryMap(
     &map->map_size,
     (EFI_MEMORY_DESCRIPTOR*)map->buffer,
+    &map->map_key;
     &map->discriptor_size,
     &map->discriptor_version);
 }
@@ -67,7 +67,7 @@ EFI_STATUS SaveMemoryMap(struct MemoryMap* map, EFI_FILE_PROTOCOL* file) {
     len = AsciiPrint(
         buffer, sizeof(buffer),
         "%u, %x, %-ls, %08lx, %lx, %lx\n",
-        i, desc->type, GetMemoryTypeUnicode(desc->Type),
+        i, desc->Type, GetMemoryTypeUnicode(desc->Type),
         desc->PhysicalStart, desc->NumberOfPages,
         desc->Attribute & 0xffffflu);
     file->Write(file, &len, buffer);
@@ -88,7 +88,7 @@ EFI_STATUS OpenRootDir(EFI_HANDLE image_handle, EFI_FILE_PROTOCOL** root) {
     EFI_OPEN_PROTOCOL_BY_HANDLE_PROTOCOL);
 
   gBS->OpenProtocol(
-    loaded_image>DeviceHandle,
+    loaded_image->DeviceHandle,
     &gEfiSimpleFileSystemProtocolGuid,
     (VOID**)&fs,
     image_handle,
